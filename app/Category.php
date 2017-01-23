@@ -7,15 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
 	//relacion hasMany
-    public function books(){
+    public function books()
+    {
     	return $this->hasMany(Book::class);
     }
 
-    public function getNumBooksAttribute(){
+    public function getNumBooksAttribute()
+    {
     	return count($this->books->where('status','public'));
     }
 
-    public function getBooksPublicAttribute(){
+    public function getBooksPublicAttribute()
+    {
     	return $this->books->where('status','public');
     }
 }

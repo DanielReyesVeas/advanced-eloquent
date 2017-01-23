@@ -11,23 +11,12 @@
 |
 */
 
-use AdvancedELOQUENT\User;
+use AdvancedELOQUENT\Book;
 
 Route::get('/', function () {
 
-    $user = User::find(1);
-
-	echo $user->name; 
-    
-    foreach($user->exams as $exam)
-    {
-        echo "<li>" 
-        . $exam->title 
-        . " Nota " . $exam->pivot->score
-        . " Fecha " . $exam->pivot->created_at
-        //  . " Fecha " . $exam->created_at     Fecha de la tabla exams.
-        .  "</li>";
-    }
+    $books = Book::with('category','user')->get();
+    return view('home', compact('books'));
 });
 
 /*

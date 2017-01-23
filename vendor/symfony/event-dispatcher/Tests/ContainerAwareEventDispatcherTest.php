@@ -29,7 +29,7 @@ class ContainerAwareEventDispatcherTest extends AbstractEventDispatcherTest
     {
         $event = new Event();
 
-        $service = $this->getMock('Symfony\Component\EventDispatcher\Tests\Service');
+        $service = $this->getMockBuilder('Symfony\Component\EventDispatcher\Tests\Service')->getMock();
 
         $service
             ->expects($this->once())
@@ -50,11 +50,23 @@ class ContainerAwareEventDispatcherTest extends AbstractEventDispatcherTest
     {
         $event = new Event();
 
-        $service = $this->getMock('Symfony\Component\EventDispatcher\Tests\SubscriberService');
+        $service = $this->getMockBuilder('Symfony\Component\EventDispatcher\Tests\SubscriberService')->getMock();
 
         $service
             ->expects($this->once())
             ->method('onEvent')
+            ->with($event)
+        ;
+
+        $service
+            ->expects($this->once())
+            ->method('onEventWithPriority')
+            ->with($event)
+        ;
+
+        $service
+            ->expects($this->once())
+            ->method('onEventNested')
             ->with($event)
         ;
 
@@ -65,13 +77,15 @@ class ContainerAwareEventDispatcherTest extends AbstractEventDispatcherTest
         $dispatcher->addSubscriberService('service.subscriber', 'Symfony\Component\EventDispatcher\Tests\SubscriberService');
 
         $dispatcher->dispatch('onEvent', $event);
+        $dispatcher->dispatch('onEventWithPriority', $event);
+        $dispatcher->dispatch('onEventNested', $event);
     }
 
     public function testPreventDuplicateListenerService()
     {
         $event = new Event();
 
-        $service = $this->getMock('Symfony\Component\EventDispatcher\Tests\Service');
+        $service = $this->getMockBuilder('Symfony\Component\EventDispatcher\Tests\Service')->getMock();
 
         $service
             ->expects($this->once())
@@ -93,7 +107,7 @@ class ContainerAwareEventDispatcherTest extends AbstractEventDispatcherTest
     {
         $event = new Event();
 
-        $service = $this->getMock('Symfony\Component\EventDispatcher\Tests\Service');
+        $service = $this->getMockBuilder('Symfony\Component\EventDispatcher\Tests\Service')->getMock();
 
         $container = new Container();
         $container->set('service.listener', $service);
@@ -116,7 +130,7 @@ class ContainerAwareEventDispatcherTest extends AbstractEventDispatcherTest
 
     public function testGetListenersOnLazyLoad()
     {
-        $service = $this->getMock('Symfony\Component\EventDispatcher\Tests\Service');
+        $service = $this->getMockBuilder('Symfony\Component\EventDispatcher\Tests\Service')->getMock();
 
         $container = new Container();
         $container->set('service.listener', $service);
@@ -133,7 +147,7 @@ class ContainerAwareEventDispatcherTest extends AbstractEventDispatcherTest
 
     public function testRemoveAfterDispatch()
     {
-        $service = $this->getMock('Symfony\Component\EventDispatcher\Tests\Service');
+        $service = $this->getMockBuilder('Symfony\Component\EventDispatcher\Tests\Service')->getMock();
 
         $container = new Container();
         $container->set('service.listener', $service);
@@ -148,7 +162,7 @@ class ContainerAwareEventDispatcherTest extends AbstractEventDispatcherTest
 
     public function testRemoveBeforeDispatch()
     {
-        $service = $this->getMock('Symfony\Component\EventDispatcher\Tests\Service');
+        $service = $this->getMockBuilder('Symfony\Component\EventDispatcher\Tests\Service')->getMock();
 
         $container = new Container();
         $container->set('service.listener', $service);
@@ -173,11 +187,21 @@ class SubscriberService implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            'onEvent' => array('onEvent'),
+            'onEvent' => 'onEvent',
+            'onEventWithPriority' => array('onEventWithPriority', 10),
+            'onEventNested' => array(array('onEventNested')),
         );
     }
 
     public function onEvent(Event $e)
+    {
+    }
+
+    public function onEventWithPriority(Event $e)
+    {
+    }
+
+    public function onEventNested(Event $e)
     {
     }
 }

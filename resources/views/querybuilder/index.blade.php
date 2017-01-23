@@ -6,13 +6,14 @@
     <body>
         <h1>Query Builder</h1>
         <ul>
-        @foreach($users as $user)
+        @foreach($books as $book)
             <li>
-                <strong>Autor</strong>: {{ $user->user_name }}
-                {{ $user->user_email }} 
+                {{ $book->title }} - ({{ $book->category }})
+                {{ $book->description }} 
                
             </li>
         @endforeach
         </ul>
     </body>
 </html>
+

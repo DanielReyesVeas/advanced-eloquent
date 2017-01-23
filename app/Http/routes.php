@@ -12,13 +12,45 @@
 */
 
 Route::get('/', function () {
-	$users = DB::table('users')
-	->select('name as user_name','email as user_email')
+	$books = DB::table('categories')
+	->join('books','categories.id','=','books.category_id')
+	->where('books.status','public')
+	->select('categories.name as category','books.title','books.description')
 	->get();
 
-	return view('querybuilder.index', compact('users'));
+	return view('querybuilder.index', compact('books'));
 });
 
+/*
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Query Builder</title>
+    </head>
+    <body>
+        <h1>Query Builder</h1>
+        <ul>
+        @foreach($users as $user)
+            <li>
+                <strong>Autor</strong>: {{ $user->name }}
+                {{ $user->email }} 
+                <ul>
+                @foreach($user->manyBooks as $book)
+                    <li>{{ $book->title }}</li>
+                @endforeach
+                </ul>
+            </li>
+        @endforeach
+        </ul>
+    </body>
+</html>
+
+Route::get('/', function () {
+	$users = AdvancedELOQUENT\User::all();
+	return view('querybuilder.index', compact('users'));
+});
+*/
 
 /*
 |--------------------------------------------------------------------------

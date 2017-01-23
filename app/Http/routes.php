@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Routes File
@@ -10,11 +9,45 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-
+use AdvancedELOQUENT\Book; // Entidad
 Route::get('/', function () {
-    return AdvancedELOQUENT\Book::all();
+	$books = AdvancedELOQUENT\Book::get();
+	return view('destroy',compact('books'));
 });
 
+Route::delete('destroy', function(Illuminate\Http\Request $request){
+	$ids = $request->get('ids');
+
+	if(count($ids)){
+		AdvancedELOQUENT\Book::destroy($ids);		
+	}
+
+	return back();
+});
+
+// Buscar un registro que está en papelera
+Route::get('registro-en-papelera/{id}', function ($id) {
+    $book = Book::withTrashed()->find($id); 
+    return $book;
+});
+// Enviar un registro a papelera
+Route::get('enviar-a-papelera/{id}', function ($id) {
+	$book = Book::find($id);
+    $book->delete();
+    return 'Enviado a papelera';
+});
+// Restaurar un registro que está en papelera
+Route::get('restaurar-registro/{id}', function ($id) {
+    $book = Book::withTrashed()->find($id);
+    $book->restore();
+    return 'Restaurado';
+});
+// Eliminar un registro de forma permanente
+Route::get('eliminar-registro/{id}', function ($id) {
+    $book = Book::withTrashed()->find($id);
+    $book->forceDelete();
+    return 'Eliminado de forma permanente';
+});
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -25,7 +58,6 @@ Route::get('/', function () {
 | kernel and includes session state, CSRF protection, and more.
 |
 */
-
 Route::group(['middleware' => ['web']], function () {
     //
 });

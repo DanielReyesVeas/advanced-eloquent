@@ -1,8 +1,6 @@
 <?php
-
 use Illuminate\Database\Seeder;
 use AdvancedELOQUENT\User;
-
 class BookUserTableSeeder extends Seeder
 {
     /**
@@ -12,11 +10,12 @@ class BookUserTableSeeder extends Seeder
      */
     public function run()
     {
-        for($i=1; $i<=10; $i++){
-        	$user = User::find($i);
-        	for($j=1; $j<=3; $j++){
-        		$user->books()->attach(rand(1,20));
-        	}
+        for($i=1 ; $i<=10 ; $i++){
+            $user = User::find($i);
+            for($j=1 ; $j<=3 ; $j++){
+                $user->manyBooks()->attach(rand(1,20));
+            }
         }
     }
 }
+

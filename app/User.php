@@ -1,9 +1,6 @@
 <?php
-
 namespace AdvancedELOQUENT;
-
 use Illuminate\Foundation\Auth\User as Authenticatable;
-
 class User extends Authenticatable
 {
     /**
@@ -14,7 +11,6 @@ class User extends Authenticatable
     protected $fillable = [
         'name', 'email', 'password',
     ];
-
     /**
      * The attributes excluded from the model's JSON form.
      *
@@ -23,12 +19,18 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-
-    public function manyBooks(){
+    public function manyBooks()
+    {
         return $this->belongsToMany(Book::class);
     }
-
-    public function getBooksAttribute(){
+    public function getBooksAttribute()
+    {
         return $this->manyBooks()->lists('book_id')->toArray();
+    }
+    public function exams()
+    {
+        return $this->belongsToMany(Exam::class)
+            ->withPivot('score')
+            ->withTimestamps();
     }
 }

@@ -5,7 +5,7 @@
     </head>
     <body>
         <p>
-            {{ count($books) }} 
+            {{ count($books) }}
             Registros
         </p>
         <form action="{{ url('destroy') }}" method="post">
@@ -13,8 +13,9 @@
             {!! method_field('delete') !!}
 
             @foreach($books as $book)
-            <input type="checkbox" name="ids[]" value="{{ $book->id }}">{{ $book->title }}<br />
+            <input type="checkbox" name="ids[]" value="{{ $book->id }}">{{ $book->title }}<br>
             @endforeach
+
             <input type="submit" value="Enviar">
         </form>
     </body>

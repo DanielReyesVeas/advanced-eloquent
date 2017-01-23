@@ -254,7 +254,9 @@ class ComposerStaticInitea7329586f997248f633a47d24e34f52
 
     public static $classMap = array (
         'BookTableSeeder' => __DIR__ . '/../..' . '/database/seeds/BookTableSeeder.php',
+        'BookUserTableSeeder' => __DIR__ . '/../..' . '/database/seeds/BookUserTableSeeder.php',
         'CategoryTableSeeder' => __DIR__ . '/../..' . '/database/seeds/CategoryTableSeeder.php',
+        'CreateBookUserTable' => __DIR__ . '/../..' . '/database/migrations/2017_01_23_134116_create_book_user_table.php',
         'CreateBooksTable' => __DIR__ . '/../..' . '/database/migrations/2016_01_26_101805_create_books_table.php',
         'CreateCategoriesTable' => __DIR__ . '/../..' . '/database/migrations/2016_02_10_091237_create_categories_table.php',
         'CreatePasswordResetsTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
@@ -332,7 +334,6 @@ class ComposerStaticInitea7329586f997248f633a47d24e34f52
         'Hamcrest\\Util' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Util.php',
         'Hamcrest\\Xml\\HasXPath' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Xml/HasXPath.php',
         'IlluminateQueueClosure' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Queue/IlluminateQueueClosure.php',
-        'Migration' => __DIR__ . '/../..' . '/database/migrations/2017_01_23_034004_migration.php',
         'PHPUnit_Exception' => __DIR__ . '/..' . '/phpunit/phpunit/src/Exception.php',
         'PHPUnit_Extensions_GroupTestSuite' => __DIR__ . '/..' . '/phpunit/phpunit/src/Extensions/GroupTestSuite.php',
         'PHPUnit_Extensions_PhptTestCase' => __DIR__ . '/..' . '/phpunit/phpunit/src/Extensions/PhptTestCase.php',

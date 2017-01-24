@@ -27,8 +27,23 @@ $factory->define(AdvancedELOQUENT\Book::class, function (Faker\Generator $faker)
         'user_id' => rand(1,10),
     ];
 });
+
 $factory->define(AdvancedELOQUENT\Exam::class, function (Faker\Generator $faker){
     return [
         'title' => $faker->name,
+    ];
+});
+
+$factory->define(AdvancedELOQUENT\Page::class, function (Faker\Generator $faker){
+    return [
+        'name' => $faker->name,
+        'body' => $faker->text,
+    ];
+});
+
+$factory->define(AdvancedELOQUENT\Post::class, function (Faker\Generator $faker){
+    return [
+        'title' => $faker->name,
+        'body' => $faker->text,
     ];
 });

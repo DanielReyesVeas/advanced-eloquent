@@ -11,12 +11,17 @@
 |
 */
 
-use AdvancedELOQUENT\Book;
+use AdvancedELOQUENT\User;
+use AdvancedELOQUENT\Page;
 
-Route::get('/', function () {
+Route::get('/', function () 
+{
+    $page = Page::find(6);
 
-    $books = Book::with('category','user')->get();
-    return view('home', compact('books'));
+    echo $page->name;
+    foreach($page->comments as $comment){
+        echo "<li>" . $comment->body . "</li>";
+    }
 });
 
 /*
